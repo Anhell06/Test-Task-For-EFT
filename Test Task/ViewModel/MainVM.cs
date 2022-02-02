@@ -16,7 +16,7 @@ namespace Test_Task
         public MainVM(IModel model)
         {
             Model = model;
-            Model.WeatherChange += UpdateWeather;
+            Model.Factory.WeatherChange += UpdateWeather;
             Model.ButtonUpdate.ButtonTextChange += (string text) => ButtonText = text;
         }
 

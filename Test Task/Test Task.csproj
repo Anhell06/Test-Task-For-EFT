@@ -60,7 +60,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\ButtonUpdate.cs" />
+    <Compile Include="Model\ILoadingFactory.cs" />
     <Compile Include="Model\IModel.cs" />
+    <Compile Include="Model\LoadingFactory.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\ILoader.cs" />
     <Compile Include="JSONModel\ImageJSONModel.cs" />

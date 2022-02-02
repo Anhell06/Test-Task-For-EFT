@@ -10,9 +10,12 @@ namespace Test_Task
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new MainVM(new Model(
+
+            LoadingFactory loadingFactory = new LoadingFactory(
                 textLoader: new WeatherTextLoader(Settings.WeatherURLApi, Settings.WeatherAPIToken),
-                imageUrlLoader: new WeatherImageLoader(Settings.ImageURLApi)));
+                imageUrlLoader: new WeatherImageLoader(Settings.ImageURLApi));
+            viewModel = new MainVM(new Model(loadingFactory));
+
             DataContext = viewModel;
         }
 

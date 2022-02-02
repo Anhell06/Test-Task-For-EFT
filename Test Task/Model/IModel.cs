@@ -5,7 +5,6 @@ namespace Test_Task
     public interface IModel
     {
         ButtonUpdate ButtonUpdate { get; }
-
-        event Action<Weather> WeatherChange;
+        ILoadingFactory Factory { get; }
     }
 }
