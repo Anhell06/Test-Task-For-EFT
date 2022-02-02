@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.ComponentModel;
 
 namespace Test_Task
 {
@@ -10,16 +8,16 @@ namespace Test_Task
         private void NotifyPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private Model Model;
+        private IModel Model;
         private string image;
         private string text;
         private string buttonText = "Узнать погоду";
 
-        public MainVM(Model model)
+        public MainVM(IModel model)
         {
             Model = model;
             Model.WeatherChange += UpdateWeather;
-            Model.ButtonUpdate.ButtonClick += UpdateButton;
+            Model.ButtonUpdate.ButtonTextChange += (string text) => ButtonText = text;
         }
 
 
@@ -56,7 +54,6 @@ namespace Test_Task
         public void Update()
         {
             Model.ButtonUpdate.Click();
-            Model.BildWeatherAsync();
         }
 
         private void UpdateWeather(Weather weather)
@@ -64,6 +61,5 @@ namespace Test_Task
             Text = $"{weather.City}\n{weather.Temrature}\n{weather.WeatherDiscription}";
             Image = weather.ImageURL;
         }
-        private void UpdateButton(string text) => ButtonText = text;
     }
 }

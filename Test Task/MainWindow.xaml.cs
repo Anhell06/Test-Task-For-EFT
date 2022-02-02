@@ -11,14 +11,11 @@ namespace Test_Task
         {
             InitializeComponent();
             viewModel = new MainVM(new Model(
-                new WeatherTextLoader(Settings.WeatherURLApi, Settings.WeatherAPIToken), 
-                new WeatherImageLoader(Settings.ImageURLApi)));
+                textLoader: new WeatherTextLoader(Settings.WeatherURLApi, Settings.WeatherAPIToken),
+                imageUrlLoader: new WeatherImageLoader(Settings.ImageURLApi)));
             DataContext = viewModel;
         }
 
-        private void CheckTheWeatherButtonClick(object sender, RoutedEventArgs e)
-        {
-            viewModel.Update();
-        }
+        private void WeatherButtonClick(object sender, RoutedEventArgs e) => viewModel.Update();
     }
 }

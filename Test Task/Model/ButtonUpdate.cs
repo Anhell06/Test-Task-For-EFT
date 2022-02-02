@@ -4,26 +4,31 @@ namespace Test_Task
 {
     public class ButtonUpdate
     {
-        public event Action<string> ButtonClick;
-        private enum ButtonType { Update, Cancel }
+        public event Action<string> ButtonTextChange;
+        public event Action UpdateClick;
+        public event Action CancelClick;
+        public enum ButtonType { Update, Cancel }
         private ButtonType buttonType = ButtonType.Update;
         public void Click()
         {
             if (buttonType == ButtonType.Update)
             {
                 buttonType = ButtonType.Cancel;
-                ButtonClick?.Invoke("Отмена");
+                ButtonTextChange?.Invoke("Отмена");
+                UpdateClick?.Invoke();
+                
             }
             else
             {
                 Refresh();
+                CancelClick?.Invoke();
             }
         }
 
         public void Refresh()
         {
             buttonType = ButtonType.Update;
-            ButtonClick?.Invoke("Узнать погоду");
+            ButtonTextChange?.Invoke("Узнать погоду");
         }
 
     }

@@ -5,34 +5,37 @@ using System.Threading.Tasks;
 
 namespace Test_Task
 {
-    public class Model
+    public class Model : IModel
     {
         public event Action<Weather> WeatherChange;
 
-        private List<CancellationTokenSource> tokens = new List<CancellationTokenSource>();
         private ITextLoader textLoader;
         private ITextLoader imageUrlLoader;
+        CancellationTokenSource cts;
 
         public ButtonUpdate ButtonUpdate { get; private set; }
-        //public Factory factory { get; private set; }
-
+        
         public Model(ITextLoader textLoader, ITextLoader imageUrlLoader)
         {
             this.textLoader = textLoader;
             this.imageUrlLoader = imageUrlLoader;
             ButtonUpdate = new ButtonUpdate();
-            //factory = new Factory();
+            ButtonUpdate.CancelClick += StopAllOperation;
+            ButtonUpdate.UpdateClick += BildWeatherAsync;
         }
 
-        public async void BildWeatherAsync()
+        private async void BildWeatherAsync()
         {
-            var cts = new CancellationTokenSource();
-            tokens.Add(cts);
-
-            if (cts.IsCancellationRequested)
-                return;
+            cts = new CancellationTokenSource();
+            CancellationToken ct = cts.Token;
 
             string weatherData = await StartBildTask(textLoader);
+
+            if (ct.IsCancellationRequested)
+            {
+                ButtonUpdate.Refresh();
+                return;
+            }
 
             string[] weatherDatas = weatherData.Split('\n');
             Weather weather = new Weather();
@@ -40,14 +43,13 @@ namespace Test_Task
             weather.WeatherDiscription = weatherDatas[1];
             weather.Temrature = weatherDatas[2] + weatherDatas[3];
 
-            if (cts.IsCancellationRequested)
-                return;
-
             weather.ImageURL = await StartBildTask(imageUrlLoader, $"q={weather.WeatherDiscription}");
 
-            if (cts.IsCancellationRequested)
+            if (ct.IsCancellationRequested)
+            {
+                ButtonUpdate.Refresh();
                 return;
-
+            }
             ButtonUpdate.Refresh();
             WeatherChange?.Invoke(weather);
         }
@@ -57,14 +59,9 @@ namespace Test_Task
             return await loader.GetDataAsync(parametrs);
         }
 
-        public void StopAllOperation()
+        private void StopAllOperation()
         {
-            foreach (var cts in tokens)
-            {
-                cts?.Cancel();
-            }
-
-            tokens.Clear();
+            cts?.Cancel();
         }
     }
 }

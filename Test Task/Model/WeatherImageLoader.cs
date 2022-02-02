@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
-using System.Threading;
+using System.Text;
 using System.Threading.Tasks;
 using Test_Task.JsonModel.Image;
-using Newtonsoft.Json;
-using System.Text;
 
 namespace Test_Task
 {
