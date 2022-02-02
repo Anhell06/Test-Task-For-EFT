@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:Test_Task"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="400"
+        ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance local:MainVM}">
     <Grid>
-        <Image HorizontalAlignment="Left" Height="199" Margin="10,22,0,0" VerticalAlignment="Top" Width="372" Source="{Binding Image}"/>
+        <Image HorizontalAlignment="Center" Height="199" Margin="10,25,0,0" VerticalAlignment="Top" Width="372" Source="{Binding Image}"/>
         <Button x:Name="Check_the_weather" Content="{Binding ButtonText}" HorizontalAlignment="Left" Margin="138,374,0,0" VerticalAlignment="Top" Width="116" Click="WeatherButtonClick"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,237,0,0" TextWrapping="Wrap" Text="{Binding Text}" VerticalAlignment="Top" Height="118" Width="372"/>
 
