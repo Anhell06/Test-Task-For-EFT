@@ -2,7 +2,7 @@
 
 namespace Test_Task
 {
-    public interface ILoadingFactory
+    public interface ILoader
     {
         event Action TaskEnded;
         event Action<Weather> WeatherChange;

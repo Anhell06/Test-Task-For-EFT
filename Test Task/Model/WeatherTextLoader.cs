@@ -11,9 +11,9 @@ namespace Test_Task
     {
         private readonly string URL;
 
-        public WeatherTextLoader(string URL, string APIToken)
+        public WeatherTextLoader()
         {
-            this.URL = URL + APIToken;
+            this.URL = Settings.WeatherURLApi + Settings.WeatherAPIToken;
         }
 
         public async Task<string> GetDataAsync(params string[] parameters)

@@ -2,7 +2,7 @@
 
 namespace Test_Task
 {
-    public class MainVM : INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string propertyName) =>
@@ -13,12 +13,7 @@ namespace Test_Task
         private string text;
         private string buttonText = "Узнать погоду";
 
-        public MainVM(IModel model)
-        {
-            Model = model;
-            Model.Factory.WeatherChange += UpdateWeather;
-            Model.ButtonUpdate.ButtonTextChange += (string text) => ButtonText = text;
-        }
+        
 
 
         public string Image

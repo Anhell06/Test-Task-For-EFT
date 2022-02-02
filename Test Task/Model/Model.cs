@@ -5,8 +5,8 @@ namespace Test_Task
     public class Model : IModel
     {
         public ButtonUpdate ButtonUpdate { get; private set; }
-        public ILoadingFactory Factory { get; private set; }
-        public Model(ILoadingFactory loadingFactory)
+        public ILoader Factory { get; private set; }
+        public Model(ILoader loadingFactory)
         {
             ButtonUpdate = new ButtonUpdate();
             Factory = loadingFactory;

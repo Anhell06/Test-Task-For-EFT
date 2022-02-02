@@ -11,9 +11,9 @@ namespace Test_Task
     {
         private string URL;
 
-        public WeatherImageLoader(string URL)
+        public WeatherImageLoader()
         {
-            this.URL = URL;
+            this.URL = Settings.ImageURLApi;
         }
 
         public async Task<string> GetDataAsync(params string[] parametrs)

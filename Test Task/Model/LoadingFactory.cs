@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Test_Task
 {
-    public class LoadingFactory : ILoadingFactory
+    public class Loader : ILoader
     {
         public event Action<Weather> WeatherChange;
         public event Action TaskEnded;
@@ -13,7 +13,7 @@ namespace Test_Task
         private ITextLoader imageUrlLoader;
         private CancellationTokenSource cts;
 
-        public LoadingFactory(ITextLoader textLoader, ITextLoader imageUrlLoader)
+        public Loader(ITextLoader textLoader, ITextLoader imageUrlLoader)
         {
             this.textLoader = textLoader;
             this.imageUrlLoader = imageUrlLoader;

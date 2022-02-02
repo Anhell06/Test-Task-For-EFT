@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="400"
         ResizeMode="NoResize"
-        d:DataContext="{d:DesignInstance local:MainVM}">
+        d:DataContext="{d:DesignInstance local:ViewModel}">
+    <Window.DataContext>
+        <local:ViewModel/>
+    </Window.DataContext>
     <Grid>
         <Image HorizontalAlignment="Center" Height="199" Margin="10,25,0,0" VerticalAlignment="Top" Width="372" Source="{Binding Image}"/>
         <Button x:Name="Check_the_weather" Content="{Binding ButtonText}" HorizontalAlignment="Left" Margin="138,374,0,0" VerticalAlignment="Top" Width="116" Click="WeatherButtonClick"/>
