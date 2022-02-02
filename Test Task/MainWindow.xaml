@@ -9,7 +9,7 @@
         d:DataContext="{d:DesignInstance local:MainVM}">
     <Grid>
         <Image HorizontalAlignment="Left" Height="199" Margin="10,22,0,0" VerticalAlignment="Top" Width="372" Source="{Binding Image}"/>
-        <Button x:Name="Check_the_weather" Content="Узнать погоду" HorizontalAlignment="Left" Margin="138,374,0,0" VerticalAlignment="Top" Width="116" Click="CheckTheWeatherButtonClick"/>
+        <Button x:Name="Check_the_weather" Content="{Binding ButtonText}" HorizontalAlignment="Left" Margin="138,374,0,0" VerticalAlignment="Top" Width="116" Click="CheckTheWeatherButtonClick"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,237,0,0" TextWrapping="Wrap" Text="{Binding Text}" VerticalAlignment="Top" Height="118" Width="372"/>
 
     </Grid>

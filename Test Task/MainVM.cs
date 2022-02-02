@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Test_Task
@@ -9,12 +10,20 @@ namespace Test_Task
         private void NotifyPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private readonly ITextLoader textLoader = new WeatherTextLoader("http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=", "5b0857721488c3d373ecdbfb57e8a57f");
-        private readonly ITextLoader imageLoader = new WeatherImageLoader();
-        private readonly Downloader downloader = new Downloader();
+        private enum ButtonType { Update, Cancel }
+        private ButtonType buttonType = ButtonType.Update;
 
+        private Model downloader;
         private string image;
         private string text;
+        private string buttonText;
+
+        public MainVM(Model model)
+        {
+            downloader = model;
+            downloader.WeatherChange += UpdateWeather;
+            ButtonText = "Узнать погоду";
+        }
 
         public string Image
         {
@@ -25,6 +34,7 @@ namespace Test_Task
                 NotifyPropertyChanged(nameof(Image));
             }
         }
+
         public string Text
         {
             get => text;
@@ -35,10 +45,38 @@ namespace Test_Task
             }
         }
 
-        public async void Update()
+        public string ButtonText
         {
-            Text = await downloader.StartAsync(textLoader);
-            Image = await downloader.StartAsync(imageLoader);
+            get => buttonText;
+            set
+            {
+                buttonText = value;
+                NotifyPropertyChanged(nameof(ButtonText));
+            }
+        }
+
+        public void Update()
+        {
+            if (buttonType == ButtonType.Update)
+            {
+                buttonType = ButtonType.Cancel;
+                ButtonText = "Отмена";
+                downloader.BildWeatherAsync();
+            }
+            else
+            {
+                buttonType = ButtonType.Update;
+                ButtonText = "Узнать погоду";
+                downloader.StopAllOperation();
+            }
+        }
+
+        private void UpdateWeather(Weather weather)
+        {
+            Text = $"{weather.City}\n{weather.Temrature}\n{weather.WeatherDiscription}";
+            Image = weather.ImageURL;
+            buttonType = ButtonType.Update;
+            ButtonText = "Узнать погоду";
         }
     }
 }

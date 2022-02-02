@@ -5,6 +5,6 @@ namespace Test_Task
 {
     public interface ITextLoader
     {
-        Task<string> GetDataAsync(CancellationTokenSource token);
+        Task<string> GetDataAsync(params string[] arg);
     }
 }

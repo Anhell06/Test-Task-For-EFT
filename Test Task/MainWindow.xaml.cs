@@ -22,7 +22,9 @@ namespace Test_Task
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new MainVM();
+            viewModel = new MainVM(new Model(
+                new WeatherTextLoader("http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=", "5b0857721488c3d373ecdbfb57e8a57f"), 
+                new WeatherImageLoader("https://bing-image-search1.p.rapidapi.com/images/search")));
             DataContext = viewModel;
         }
 
