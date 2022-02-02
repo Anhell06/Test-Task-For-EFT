@@ -59,10 +59,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ButtonUpdate.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="ILoader.cs" />
     <Compile Include="ImageJSONModel.cs" />
-    <Compile Include="String.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Weather.cs" />
     <Compile Include="WeatherImageLoader.cs" />
     <Compile Include="WeatherJSONModel.cs" />

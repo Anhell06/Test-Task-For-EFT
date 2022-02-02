@@ -13,10 +13,15 @@ namespace Test_Task
         private ITextLoader textLoader;
         private ITextLoader imageUrlLoader;
 
+        public ButtonUpdate ButtonUpdate { get; private set; }
+        //public Factory factory { get; private set; }
+
         public Model(ITextLoader textLoader, ITextLoader imageUrlLoader)
         {
             this.textLoader = textLoader;
             this.imageUrlLoader = imageUrlLoader;
+            ButtonUpdate = new ButtonUpdate();
+            //factory = new Factory();
         }
 
         public async void BildWeatherAsync()
@@ -43,6 +48,7 @@ namespace Test_Task
             if (cts.IsCancellationRequested)
                 return;
 
+            ButtonUpdate.Refresh();
             WeatherChange?.Invoke(weather);
         }
 

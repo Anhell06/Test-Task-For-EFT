@@ -10,20 +10,18 @@ namespace Test_Task
         private void NotifyPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private enum ButtonType { Update, Cancel }
-        private ButtonType buttonType = ButtonType.Update;
-
-        private Model downloader;
+        private Model Model;
         private string image;
         private string text;
-        private string buttonText;
+        private string buttonText = "Узнать погоду";
 
         public MainVM(Model model)
         {
-            downloader = model;
-            downloader.WeatherChange += UpdateWeather;
-            ButtonText = "Узнать погоду";
+            Model = model;
+            Model.WeatherChange += UpdateWeather;
+            Model.ButtonUpdate.ButtonClick += UpdateButton;
         }
+
 
         public string Image
         {
@@ -57,26 +55,15 @@ namespace Test_Task
 
         public void Update()
         {
-            if (buttonType == ButtonType.Update)
-            {
-                buttonType = ButtonType.Cancel;
-                ButtonText = "Отмена";
-                downloader.BildWeatherAsync();
-            }
-            else
-            {
-                buttonType = ButtonType.Update;
-                ButtonText = "Узнать погоду";
-                downloader.StopAllOperation();
-            }
+            Model.ButtonUpdate.Click();
+            Model.BildWeatherAsync();
         }
 
         private void UpdateWeather(Weather weather)
         {
             Text = $"{weather.City}\n{weather.Temrature}\n{weather.WeatherDiscription}";
             Image = weather.ImageURL;
-            buttonType = ButtonType.Update;
-            ButtonText = "Узнать погоду";
         }
+        private void UpdateButton(string text) => ButtonText = text;
     }
 }
