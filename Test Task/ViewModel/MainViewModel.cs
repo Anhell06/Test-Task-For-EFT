@@ -5,7 +5,7 @@ namespace Test_Task.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private const string City = "London";
+        private const string City = Settings.City;
 
         private ILoader loader;
         private string image;
