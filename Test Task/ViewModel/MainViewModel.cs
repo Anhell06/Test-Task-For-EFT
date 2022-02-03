@@ -1,34 +1,89 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace Test_Task.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainViewModel()
+        private const string City = "London";
+
+        private ILoader loader;
+        private string image;
+        private string text;
+        private string buttonText;
+        private RelayCommand commandButton;
+        private RelayCommand startCommand;
+        private RelayCommand stopCommand;
+
+        public MainViewModel(ILoader loader)
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+
+            startCommand = new RelayCommand(StartDownload);
+            stopCommand = new RelayCommand(StopDownload);
+
+            UpdateButton("Узнать погоду", startCommand);
+
+            this.loader = loader;
+            loader.LoadStoped += () => UpdateButton("Узнать погоду", startCommand);
+            loader.WeatherLoaded += UpdateWeather;
+
+        }
+
+        public RelayCommand ComandButton
+        {
+            get => commandButton;
+            set
+            {
+                commandButton = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string Image
+        {
+            get => image;
+            set
+            {
+                image = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string Text
+        {
+            get => text;
+            set
+            {
+                text = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string ButtonText
+        {
+            get => buttonText;
+            set
+            {
+                buttonText = value;
+                RaisePropertyChanged();
+            }
+        }
+        private void StartDownload()
+        {
+            UpdateButton("Отмена", stopCommand);
+            loader.LoadWeather(City);
+        }
+        private void StopDownload()
+        {
+            UpdateButton("Узнать погоду", startCommand);
+            loader.StopLoad();
+        }
+        private void UpdateButton(string text, RelayCommand command)
+        {
+            ButtonText = text;
+            ComandButton = command;
+        }
+        private void UpdateWeather(Weather weather)
+        {
+            Text = $"{weather.City}\n{weather.Temrature}\n{weather.WeatherDiscription}";
+            Image = weather.ImageURL;
         }
     }
 }

@@ -1,34 +1,28 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Test_Task.JsonModel.Image;
 
-namespace Test_Task
+namespace SearchImageAPI
 {
-    public class WeatherImageLoader : ITextLoader
+    public class SearchImagerURL : IImageAPI
     {
         private string URL;
 
-        public WeatherImageLoader()
+        public SearchImagerURL()
         {
             this.URL = Settings.ImageURLApi;
         }
 
-        public async Task<string> GetDataAsync(params string[] parametrs)
+        public async Task<string> GetImageURL(string discription)
         {
-            var sb = new StringBuilder();
-            foreach (var param in parametrs)
-            {
-                sb.Append($"?{param}");
-            }
+
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
 
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"{URL}{sb.ToString()}"),
+                RequestUri = new Uri($"{URL}?q={discription}"),
                 Headers =
                 {
                     { "x-rapidapi-host", "bing-image-search1.p.rapidapi.com" },
@@ -45,13 +39,14 @@ namespace Test_Task
             }
 
 
-            return ParsToJSON(body).value[0].contentUrl;
+            return ParsToJSON(body).Value[0].ContentUrl;
 
         }
+
         private ImageRoot ParsToJSON(string body)
         {
-            var deserializator = JsonConvert.DeserializeObject<ImageRoot[]>("[" + body + "]");
-            return deserializator[0];
+            var deserializator = JsonConvert.DeserializeObject<ImageRoot>(body);
+            return deserializator;
         }
     }
 }

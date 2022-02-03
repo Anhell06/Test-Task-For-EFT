@@ -1,61 +1,30 @@
-/*
-  In App.xaml:
-  <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:Test_Task"
-                           x:Key="Locator" />
-  </Application.Resources>
-  
-  In the View:
-  DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-
-  You can also use Blend to do all this with the tool's support.
-  See http://www.galasoft.ch/mvvm
-*/
-
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
+using Microsoft.Extensions.DependencyInjection;
+using SearchImageAPI;
+using WeatherAPI;
 
 namespace Test_Task.ViewModel
 {
-    /// <summary>
-    /// This class contains static references to all the view models in the
-    /// application and provides an entry point for the bindings.
-    /// </summary>
     public class ViewModelLocator
     {
-        /// <summary>
-        /// Initializes a new instance of the ViewModelLocator class.
-        /// </summary>
+        private ServiceProvider serviceProvider;
+
         public ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
-
-            SimpleIoc.Default.Register<MainViewModel>();
+            serviceProvider = ConfigureServices().BuildServiceProvider();
         }
 
-        public MainViewModel Main
+        private static IServiceCollection ConfigureServices()
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
+            var services = new ServiceCollection();
+            services.AddSingleton<ILoader, Loader>();
+            services.AddSingleton<MainViewModel>();
+            services.AddSingleton<IWeatherAPI, DownloaderWeather>();
+            services.AddSingleton<IImageAPI, SearchImagerURL>();
+
+            return services;
         }
-        
-        public static void Cleanup()
-        {
-            // TODO Clear the ViewModels
-        }
+
+        public MainViewModel Main => serviceProvider.GetRequiredService<MainViewModel>();
+
     }
 }

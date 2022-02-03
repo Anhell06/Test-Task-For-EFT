@@ -2,9 +2,9 @@
 {
     public class Weather
     {
-        public string ImageURL;
-        public string City;
-        public string Temrature;
-        public string WeatherDiscription;
+        public string ImageURL { get; set; }
+        public string City { get; set; }
+        public string Temrature { get; set; }
+        public string WeatherDiscription { get; set; }
     }
 }

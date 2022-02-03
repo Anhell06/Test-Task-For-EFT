@@ -36,8 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    <Reference Include="CommonServiceLocator, Version=2.0.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.6\lib\net48\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
@@ -89,18 +89,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\ButtonUpdate.cs" />
-    <Compile Include="Model\ILoadingFactory.cs" />
-    <Compile Include="Model\IModel.cs" />
-    <Compile Include="Model\LoadingFactory.cs" />
-    <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\ILoader.cs" />
-    <Compile Include="JSONModel\ImageJSONModel.cs" />
+    <Compile Include="Logic\Interface\ILoader.cs" />
+    <Compile Include="Logic\Implementation\Loader.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Model\Weather.cs" />
-    <Compile Include="Model\WeatherImageLoader.cs" />
-    <Compile Include="JSONModel\WeatherJSONModel.cs" />
-    <Compile Include="Model\WeatherTextLoader.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
@@ -111,7 +103,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -143,6 +134,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SearchImageAPI\SearchImageAPI.csproj">
+      <Project>{28ce529e-9f26-41cf-b4c4-0abdd7b2034b}</Project>
+      <Name>SearchImageAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeatherAPI\WeatherAPI.csproj">
+      <Project>{1b0447a2-b560-4f4d-aae6-21a21b24c991}</Project>
+      <Name>WeatherAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
